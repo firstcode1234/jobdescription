@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: innovation strategy department
+  labels:
+    app: innovation strategy department
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: innovation strategy department

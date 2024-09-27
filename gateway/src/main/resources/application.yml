@@ -1,0 +1,76 @@
+server:
+  port: 8088
+
+---
+
+spring:
+  profiles: default
+  cloud:
+    gateway:
+#<<< API Gateway / Routes
+      routes:
+        - id:  all departments
+          uri: http://localhost:8082
+          predicates:
+            - Path=/jobdescriptions/**, 
+        - id: innovation strategy department
+          uri: http://localhost:8083
+          predicates:
+            - Path=/organizations/**, 
+        - id:  personnel office
+          uri: http://localhost:8084
+          predicates:
+            - Path=/employees/**, 
+        - id: frontend
+          uri: http://localhost:8080
+          predicates:
+            - Path=/**
+#>>> API Gateway / Routes
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+
+---
+
+spring:
+  profiles: docker
+  cloud:
+    gateway:
+      routes:
+        - id:  all departments
+          uri: http://allDepartments:8080
+          predicates:
+            - Path=/jobdescriptions/**, 
+        - id: innovation strategy department
+          uri: http://innovationStrategyDepartment:8080
+          predicates:
+            - Path=/organizations/**, 
+        - id:  personnel office
+          uri: http://personnelOffice:8080
+          predicates:
+            - Path=/employees/**, 
+        - id: frontend
+          uri: http://frontend:8080
+          predicates:
+            - Path=/**
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+server:
+  port: 8080
